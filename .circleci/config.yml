@@ -53,9 +53,11 @@ jobs:
       - checkout
       - run:
           name: test packages
-          command: python -m pytest
+          command: |
+            mkdir -p /root/test_report
+            python -m pytest --cov=my_package --cov-report=xml
       - store_test_results:
-          path: ../test_report
+          path: test_report
 
 workflows:
   test-build:
