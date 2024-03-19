@@ -56,13 +56,13 @@ jobs:
           command: |
             python -m pip install --upgrade pip
             pip install pandas numpy awscli pytest
+            mkdir -p /root/project/test_report
       - run:
           name: test packages
           command: |
-            mkdir -p /root/project/test_report
             python -m pytest
       - store_test_results:
-          path: test_report
+          path: ./test_report
 
 workflows:
   test-build:
