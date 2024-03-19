@@ -59,8 +59,8 @@ jobs:
       - run:
           name: test packages
           command: |
-            mkdir -p /root/test_report
-            python -m pytest --cov=my_package --cov-report=xml
+            mkdir -p /root/project/test_report
+            python -m pytest
       - store_test_results:
           path: test_report
 
