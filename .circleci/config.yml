@@ -44,7 +44,7 @@ jobs:
           name: install packages
           command: |
             python -m pip install --upgrade pip
-            pip install pandas numpy awscli
+            pip install pandas numpy awscli pytest
   test:
     docker:
       -  image: faucet/python3
