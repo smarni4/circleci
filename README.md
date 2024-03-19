@@ -9,9 +9,12 @@ version: 2.1
 jobs:
   #job name
   Hello-World:
-    docker:
+    docker:   #executor
       # base ubuntu image
       - image: cimg/base:2021.04
+        auth:
+          username: marni4
+          password: $Docker_pass
     steps:
       - run:
           name: Saying Hello
@@ -23,6 +26,9 @@ jobs:
   Fetch-Code:
     docker:
       - image: cimg/base:2021.04
+        auth:
+          username: marni4
+          password: $Docker_pass
     steps:
       - checkout
       - run:
@@ -35,6 +41,10 @@ jobs:
   Using-Node:
     docker:
       - image: cimg/node:17.2
+        # authentication if you use your own images from your docker hub registry
+        auth:
+          username: marni4
+          password: $Docker_pass
     steps:
       - run:
           name: Running the Node Container
@@ -45,6 +55,9 @@ jobs:
   Now-Complete:
     docker:
       - image: alpine:3.15
+        auth:
+          username: Marni4
+          password: $Docker_pass
     steps:
       - run:
           name: Approval-Complete
