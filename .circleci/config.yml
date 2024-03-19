@@ -37,6 +37,16 @@ jobs:
           command: |
             node -v
 
+  #Fourth job: Completes only after the manual approval
+  Now-Complete:
+    docker:
+      - image: alpine:3.15
+    steps:
+      - run:
+          name: Approval-Complete
+          command: |
+            echo "The work is now complete"
+
 # Workflows
 workflows:
   Example-Workflow:
@@ -48,3 +58,13 @@ workflows:
       - Using-Node:
           requires:
             - Fetch-Code
+      # This job waits for the manual approval in the CircleCI app
+      - Hold-For-Approval:
+          type: approval
+          requires:
+            - Using-Node
+            - Fetch-Code
+      # This job runs only after successful completion of the Hold-For-Approval job.
+      - Now-Complete:
+          requires:
+            - Hold-For-Approval
