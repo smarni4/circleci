@@ -58,6 +58,7 @@ jobs:
         auth:
           username: Marni4
           password: $Docker_pass
+    resource_class: large
     steps:
       - run:
           name: Approval-Complete
@@ -81,9 +82,20 @@ workflows:
           requires:
             - Using-Node
             - Fetch-Code
+          # Runs this job only when the commit is performed on master branch
+          filters:
+            branches:
+              only: master
       # This job runs only after successful completion of the Hold-For-Approval job.
       - Now-Complete:
           requires:
             - Hold-For-Approval
+```
+
+## Saving the test results
+```yaml
+version: 2.1
+
+
 ```
 

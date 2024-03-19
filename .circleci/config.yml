@@ -1,34 +1,66 @@
 # CircleCi configuration file
 
 version: 2.1
+#
+#jobs:
+#  run-tests:
+#    docker:
+#      - image: circleci/node:12
+#    steps:
+#      - checkout
+#      - run:
+#          name: Install npm dependencies
+#          command: |
+#            sudo npm init
+#            sudo npm install -g
+#      - run:
+#          name: Run unit tests
+#          command: |
+#            npm run test
+#  build:
+#    docker:
+#      - image: circleci/node:12
+#    steps:
+#      - checkout
+#      - run:
+#          name: Build the image
+#          command: npm run build
+#workflows:
+#  test-and-build:
+#    jobs:
+#      - run-tests
+#      - build:
+#          requires:
+#            - run-tests
 
 jobs:
-  run-tests:
-    docker:
-      - image: circleci/node:12
-    steps:
-      - checkout
-      - run:
-          name: Install npm dependencies
-          command: |
-            sudo npm init
-            sudo npm install -g
-      - run:
-          name: Run unit tests
-          command: |
-            npm run test
   build:
     docker:
-      - image: circleci/node:12
+      - image: cimg/python:3
+    resource_class: large
     steps:
       - checkout
       - run:
-          name: Build the image
-          command: npm run build
+          name: install packages
+          command: |
+            python -m pip install --upgrade pip
+            pip install pandas numpy awscli
+  test:
+    docker:
+      -  image: cimg/python:3
+    resource_class: large
+    steps:
+      - checkout
+      - run:
+          name: test packages
+          command: python -m pytest
+      - store_test_results:
+          path: ../test_report
+
 workflows:
-  test-and-build:
+  test-build:
     jobs:
-      - run-tests
-      - build:
+      - build
+      - test:
           requires:
-            - run-tests
+            - build
