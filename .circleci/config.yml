@@ -13,7 +13,7 @@ jobs:
           docker-password: DOCKER_PASSWORD
           docker-username: DOCKER_USER
       - docker_orb/build:
-          image: cimg/base:stable
+          image: google/apigee-authn-authz:1.5.10
 workflows:
   build_image:
     jobs:
