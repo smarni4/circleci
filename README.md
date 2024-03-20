@@ -96,6 +96,43 @@ workflows:
 ```yaml
 version: 2.1
 
+jobs:
+  build:
+    docker:
+      - image: faucet/python3
+    resource_class: large
+    steps:
+      - checkout
+      - run:
+          name: install packages
+          command: |
+            python -m pip install --upgrade pip
+            pip install pandas numpy awscli pytest
+  test:
+    docker:
+      -  image: faucet/python3
+    resource_class: large
+    steps:
+      - checkout
+      - run:
+          name: install packages
+          command: |
+            python -m pip install --upgrade pip
+            pip install pandas numpy awscli pytest
+            mkdir -p /root/project/test_report
+      - run:
+          name: test packages
+          command: |
+            python -m pytest
+      - store_test_results:
+          path: ./test_report
 
+workflows:
+  test-build:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
 ```
 
