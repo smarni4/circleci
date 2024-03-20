@@ -3,8 +3,7 @@
 version: 2.1
 orbs:
   docker_orb: circleci/docker@2.5.0
-context:
-  - context_demo
+
 jobs:
   build_docker_image:
     executor: docker_orb/docker
@@ -18,4 +17,6 @@ jobs:
 workflows:
   build_image:
     jobs:
-      - build_docker_image
+      - build_docker_image:
+          context:
+            - context_demo
