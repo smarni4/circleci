@@ -2,21 +2,20 @@
 
 version: 2.1
 orbs:
-  docker: circleci/docker@2.5.0
-
+  docker_orb: circleci/docker@2.5.0
+context:
+  - context_demo
 jobs:
   build_docker_image:
-    docker:
-      - image: cimg/base:stable
+    executor: docker_orb/docker
     steps:
       - setup_remote_docker
-      - docker/check:
-          - docker-password: DOCKER_PASSWORD
-          - docker-username: DOCKER_USER
-
+      - docker_orb/check:
+          docker-password: DOCKER_PASSWORD
+          docker-username: DOCKER_USER
+      - docker_orb/build:
+          image: cimg/base:stable
 workflows:
   build_image:
     jobs:
-      - build_docker_image:
-          context:
-            - context_demo
+      - build_docker_image
