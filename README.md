@@ -290,3 +290,11 @@ workflows:
           context:
             - context_demo 
 ```
+
+## Testing
+
+* Circleci provides actionable information about testing jobs that help developers produce higher-quality code by 
+  identifying and resolving issues.
+* Circleci provides insight into why tests failed. so developers can easily the code, learn what went wrong, and resolve.
+
+**Storing test results on circleci**
