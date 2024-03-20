@@ -269,3 +269,24 @@ workflows:
 * Contexts are groups of environment variables that can be secured and shared across projects.
 * After a context is created, we can use the context key in the workflows section of the config.yml file to give any job
   access to the environment variables associated with the context.
+```yaml
+version: 2.1
+orbs:
+  docker_orb: circleci/docker@2.5.0
+
+jobs:
+  docker_login_check:
+    executor: docker_orb/docker
+    steps:
+      - setup_remote_docker
+      - docker_orb/check:
+          docker-password: DOCKER_PASSWORD
+          docker-username: DOCKER_USER
+
+workflows:
+  docker_login_check:
+    jobs:
+      - docker_login_check:
+          context:
+            - context_demo 
+```

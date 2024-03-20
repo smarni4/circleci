@@ -5,18 +5,17 @@ orbs:
   docker_orb: circleci/docker@2.5.0
 
 jobs:
-  build_docker_image:
+  docker_login_check:
     executor: docker_orb/docker
     steps:
       - setup_remote_docker
       - docker_orb/check:
           docker-password: DOCKER_PASSWORD
           docker-username: DOCKER_USER
-      - docker_orb/build:
-          image: google/apigee-authn-authz:1.5.10
+
 workflows:
-  build_image:
+  docker_login_check:
     jobs:
-      - build_docker_image:
+      - docker_login_check:
           context:
             - context_demo
